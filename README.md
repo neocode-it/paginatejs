@@ -1,5 +1,5 @@
 # paginatejs
-Display html content in a paginated view & generate exact print-previews.
+Display html content in a paginated view & generate exact print-previews with focus on reliability.
 
 ## Current progress
 This library is still under development
