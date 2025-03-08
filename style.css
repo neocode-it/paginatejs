@@ -1,0 +1,17 @@
+.target{
+    margin-bottom: 20px;
+    border: 2px solid grey;
+    width: 300.5px;
+}
+
+
+.page{
+    size: A4;
+    width: 300.2px;
+}
+
+@media print{
+    .myclass{
+        break-before: always !important;
+    }
+}
