@@ -20,5 +20,17 @@ class Renderer {
     // Dom depth which will be added in case of a page-break
     this.parentList = [];
     this.maxHeight = 300;
+
+    this.prepareTarget();
+  }
+
+  prepareTarget() {
+    // Add first page
+    this.newPage();
+
+    // Create current domtree
+    this.targetParent = this.page;
+  }
+
   }
 
