@@ -16,8 +16,8 @@ This library is still under development
 ### Planned approach
 Two custom html elements, which will receive the content of the first/previous source element with the same key:
 
-- <betterprint-target data-key=""> 
-- <betterprint-source data-key="">
+- `<betterprint-target data-key=""> `
+- `<betterprint-source data-key="">`
 
 This source-element-keys will be reserved: 
 - "header"
