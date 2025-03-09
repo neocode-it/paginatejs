@@ -1,0 +1,17 @@
+{
+  "name": "paginatejs",
+  "version": "1.0.0",
+  "description": "JS lib to split html content into pages.",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack --config webpack.config.js --env production",
+    "watch": "webpack --config webpack.config.js --env watch"
+  },
+  "dependencies": {
+    "babel-loader": "^10.0.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^6.0.1"
+  }
+}
