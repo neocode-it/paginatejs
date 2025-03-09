@@ -14,8 +14,16 @@ This library is still under development
 - Presets (how to set page size, how to realize dynamic header...)
 
 ### Planned approach
-- four custom html elements, which will receive the content of the first/previous source element with the same key. betterprint-source-element keys "header" and "footer" are reserved.
--- <betterprint-source-element data-key="">
--- <betterprint-target-element data-key=""> 
--- <betterprint-source-text data-key="">
--- <betterprint-source-text data-key="">
+Four custom html elements, which will receive the content of the first/previous source element with the same key:
+
+- <betterprint-source-element data-key="">
+- <betterprint-target-element data-key=""> 
+- <betterprint-source-text data-key="">
+- <betterprint-source-text data-key="">
+
+This source-element-keys will be reserved: 
+- "header"
+- "footer"
+This target-string-keys will be reserved too:
+- "pageNumber"
+- "totalPages"
