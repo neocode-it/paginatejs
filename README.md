@@ -13,3 +13,9 @@ This library is still under development
 - Running header/footer/content
 - Presets (how to set page size, how to realize dynamic header...)
 
+### Planned approach
+- four custom html elements, which will receive the content of the first/previous source element with the same key. betterprint-source-element keys "header" and "footer" are reserved.
+-- <betterprint-source-element data-key="">
+-- <betterprint-target-element data-key=""> 
+-- <betterprint-source-text data-key="">
+-- <betterprint-source-text data-key="">
