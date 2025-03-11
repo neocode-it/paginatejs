@@ -20,8 +20,8 @@ Two custom html elements, which will receive the content of the first/previous s
 - `<betterprint-source data-key="">`
 
 This source-element-keys will be reserved: 
-- "header"
-- "footer"
-This target-string-keys will be reserved too:
 - "pageNumber"
 - "totalPages"
+This target-string-keys will be reserved too:
+- "header"
+- "footer"
