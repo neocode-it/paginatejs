@@ -6,7 +6,7 @@ const TerserPlugin = require("terser-webpack-plugin"); // For minification (prod
 const productionConfig = {
   entry: "./src/index.js", // Entry point for your application
   output: {
-    filename: "bundle.min.js", // Minified output
+    filename: "paginate.min.js", // Minified output
     path: path.resolve(__dirname, "dist"),
     library: "Paginate", // Expose exports under the global "Paginate" object
     libraryTarget: "umd", // Universal Module Definition
@@ -47,7 +47,7 @@ const productionConfig = {
 const watchConfig = {
   entry: "./src/index.js", // Entry point for your application
   output: {
-    filename: "bundle.js", // Non-minified output
+    filename: "paginate.js", // Non-minified output
     path: path.resolve(__dirname, "dist"),
     library: "Paginate", // Expose exports under the global "Paginate" object
     libraryTarget: "umd", // Universal Module Definition
