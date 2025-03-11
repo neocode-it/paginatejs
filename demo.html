@@ -4,18 +4,34 @@
 <title>Page Title</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
+<!-- <script src="script.js"></script> -->
+<script src="dist/paginate.js"></script>
 
-<script src=""></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  renderer = new Paginate.Renderer(document.querySelector("template").content);
+
+  const start = performance.now();
+
+  renderer.processContent();
+
+  const end = performance.now();
+  const timeTaken = end - start;
+  console.log(`Time taken: ${timeTaken}ms`);
+});
+</script>
+
 <body>
 
 
 <template class="">
+
   <h1>This is a Heading</h1>
   <p class="1">This is a paragraph.</p>
   <p class="myclass">This is another paragraph.</p>
   
   <div id="parentElement">
+
      <h1>Main Heading</h1>
      <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
      <ul>
