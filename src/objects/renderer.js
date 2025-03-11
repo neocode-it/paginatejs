@@ -1,16 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
-  renderer = new Renderer(document.querySelector("template").content);
-
-  const start = performance.now();
-
-  renderer.processContent();
-
-  const end = performance.now();
-  const timeTaken = end - start;
-  console.log(`Time taken: ${timeTaken}ms`);
-});
-
-class Renderer {
+export class Renderer {
   constructor(content, renderTo = document.body) {
     this.content = content;
     this.renderTo = renderTo;
