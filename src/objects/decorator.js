@@ -6,6 +6,22 @@ export class Decorator {
   decorate(parent) {
     const pages = this.parsePages(parent);
   }
+  /**
+   * Insert page number references into each page references
+   *
+   * @param {Array} references
+   * @returns {null}
+   */
+  insertPageNumberReference(referencePages) {
+    const totalPages = referencePages.length;
+    const pageNumberHash = this.hash("pageNumber");
+    const totalPagesHash = this.hash("totalPages");
+
+    for (let i = 0; i < referencePages.length; i++) {
+      referencePages[i].pageNumberHash = i + 1;
+      referencePages[i].totalPagesHash = totalPages;
+    }
+  }
 
   /**
    * Returns a hash code from a string
