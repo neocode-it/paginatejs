@@ -6,6 +6,39 @@ export class Decorator {
   decorate(parent) {
     const pages = this.parsePages(parent);
   }
+
+  /**
+   * Calculates the references of each page individually
+   * add default keys to the content like page numbers
+   * @param {Element} parent
+   * @returns {Array referencePages}
+   */
+  parsePages(parent) {
+    const pages = Array.from(parent.children).filter((child) =>
+      child.classList.contains("page")
+    );
+
+    let referencePages = [];
+    let previousReferences = {};
+    for (let i = 0; i < pages.length; i++) {
+      let pagePreference = this.parseCurrentPage(pages[i]);
+
+      // add previous references to this page too
+      pagePreference = Object.assign(
+        previousReferences,
+        this.parseCurrentPage(pages[i])
+      );
+
+      // Insert page to preferences list and update previousReference for next page
+      referencePages.push(pagePreference);
+      previousReferences = pagePreference;
+    }
+
+    this.insertPageNumberReference(referencePages);
+
+    return referencePages;
+  }
+
   /**
    * Insert page number references into each page references
    *
