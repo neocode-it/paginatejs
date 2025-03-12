@@ -73,3 +73,18 @@ export class Renderer {
     return this.page.offsetHeight;
   }
 
+  newPage() {
+    this.page = document.createElement("div");
+
+    this.page.classList.add("target");
+    this.renderTo.appendChild(this.page);
+
+    // Create current domtree
+    this.targetParent = this.page;
+
+    this.parentList.forEach((node) => {
+      let newNode = node.cloneNode(false);
+      this.targetParent.appendChild(newNode);
+      this.targetParent = newNode;
+    });
+  }
