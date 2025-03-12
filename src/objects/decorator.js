@@ -40,6 +40,39 @@ export class Decorator {
   }
 
   /**
+   * Searches current page for source content and generates a
+   * Object of every reference. References are a hash-value of the data-key attribute
+   *
+   *
+   * @param {Element} page - Page to search for source content
+   * @returns {Object references} references
+   */
+  parseCurrentPage(page) {
+    // This will fetch all source-elements in a recursive way, starting from the beinning of the page
+    const sources = page.querySelectorAll("betterprint-source");
+
+    let references = {};
+    // Let's parse the sources and overrite existing ones
+    sources.forEach((source) => {
+      // Get key of this source-element
+      const dataKey = source.getAttribute("data-key");
+
+      // Check if the key attribute exists and is not empty or reservedKey
+      if (
+        dataKey &&
+        dataKey.trim() !== "" &&
+        !this.reservedKeys.includes(dataKey)
+      ) {
+        // create hash of dataKey in oder to prevent invalid Object keys
+        const hash = this.hash(dataKey);
+        references.hash = source;
+      }
+    });
+
+    return references;
+  }
+
+  /**
    * Insert page number references into each page references
    *
    * @param {Array} references
