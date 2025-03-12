@@ -25,3 +25,17 @@ This source-element-keys will be reserved:
 This target-string-keys will be reserved too:
 - "header"
 - "footer"
+
+## How is Paginate.js structured?
+
+Paginate.js is split into tow main Classes 
+
+### Renderer Class
+
+Rendere is responsible for the core parts of Paginate.js: Create empty pages and split the content accross those.
+
+### Decorator Class
+
+Decorator is responsible for the header and footer rendering including all the running-elements. After rendering the pages, decorator will parse all pages and create header/footer depending on them.
+
+Please note: Decorator is not directly accessible, instead beeing utilized by Renderer directly.
