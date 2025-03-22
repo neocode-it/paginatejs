@@ -95,8 +95,7 @@ export class Renderer {
 
   insertAndCheckNode(node) {
     this.targetParent.appendChild(node.cloneNode(true));
-
-    return this.page.offsetHeight;
+    return this.page.scrollHeight;
   }
 
   newPage() {
