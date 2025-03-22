@@ -113,3 +113,11 @@ export class Renderer {
       this.targetParent = newNode;
     });
   }
+
+  removeLastChildNode() {
+    if (this.targetParent.lastChild) {
+      // Removes the last child, including text nodes
+      this.targetParent.removeChild(this.targetParent.lastChild);
+    }
+  }
+
