@@ -23,7 +23,22 @@ export class Renderer {
     for (let i = 0; i < parentNode.childNodes.length; i++) {
       const node = parentNode.childNodes[i];
 
-      if (node.hasChildNodes()) {
+      let breakInside = false;
+      let breakBefore = false;
+      let breakAfter = false;
+
+      if (node instanceof Element) {
+        const style = window.getComputedStyle(node);
+        breakBefore = style.breakBefore === "always";
+        breakInside = style.breakInside === "always";
+        breakAfter = style.breakAfter === "always";
+      }
+
+      if (breakBefore) {
+        this.newPage();
+      }
+
+      if (node.hasChildNodes() && !breakInside) {
         // increse current dom depth
         // Add node shallow again
         let newParent = node.cloneNode(false);
@@ -64,6 +79,10 @@ export class Renderer {
             );
           }
         }
+      }
+
+      if (breakAfter) {
+        this.newPage();
       }
     }
   }
