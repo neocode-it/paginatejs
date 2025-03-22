@@ -18,6 +18,12 @@ export class Renderer {
 
     // Create current domtree
     this.targetParent = this.page;
+  /**
+   * Processes the content of parent as a recursive function and distrubutes the content throughout all pages
+   *
+   * @param {Node} parentNode - parent of the current depth which will be processed into pages
+   * @returns {null}
+   */
   processContent(parentNode = this.content) {
     // iterate through all direct children
     for (let i = 0; i < parentNode.childNodes.length; i++) {
