@@ -36,3 +36,10 @@ export class Skeleton {
         `;
     return style;
   }
+
+  static getPagesWrapper() {
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("paginatejs", "paginatejs-pages");
+    return wrapper;
+  }
+}
