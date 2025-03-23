@@ -14,6 +14,10 @@ This library is still under development
 - Prevent @media-print rules and page-break rules
 - Implement general page layout
 - Improve structure if possible
+- Handle edge-cases: Vertical overflow & single element without beeing able to break
+
+### Optional features
+- Page ranges (in order to apply different layout to specific pages)
 
 ### Planning in progress
 - Running header/footer/content
