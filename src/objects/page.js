@@ -1,3 +1,16 @@
+export class Page {
+  /**
+   * Creates a new page inside parent
+   *
+   * @param {HTMLElement} parent - Paginatejs wrapper
+   * @param {string[]} [pageRange] - Current page range
+   */
+  constructor(parent, pageRange = []) {
+    this.parent = parent;
+    this.pageRange = pageRange;
+
+    this.page = this.createPage();
+  }
 
   /**
    * Creates an empty, new page element
