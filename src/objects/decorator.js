@@ -1,3 +1,9 @@
+/**
+ * Decorator class will decorate all pages after rendering. It's main purpose:
+ * - Parse betterprint elements
+ * - Render Header / Footer content
+ * - Add page numbers
+ */
 export class Decorator {
   constructor(parent) {
     this.reservedKeys = ["pageNumber", "totalPages"];
