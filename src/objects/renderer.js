@@ -2,6 +2,7 @@ export class Renderer {
   constructor(content, renderTo = document.body) {
     this.content = content;
     this.renderTo = renderTo;
+    this.pages = [];
 
     // Current page targetElement to copy nodes into
     this.targetParent = this.page;
@@ -67,7 +68,7 @@ export class Renderer {
       } else {
         let height = this.insertAndCheckNode(node);
 
-        if (height > this.maxHeight) {
+        if (height > this.currentPage.contentHeight) {
           // Remove overflowing node
           this.removeLastChildNode();
 
@@ -78,7 +79,7 @@ export class Renderer {
           let height = this.insertAndCheckNode(node);
 
           // Still overflowing? Element can't be broken even more... MAYDAY :)
-          if (height > this.maxHeight) {
+          if (height > this.currentPage.contentHeight) {
             console.log(
               "Element cannot be rendered to page, does overflow by itself..." +
                 node.textContent
@@ -95,17 +96,17 @@ export class Renderer {
 
   insertAndCheckNode(node) {
     this.targetParent.appendChild(node.cloneNode(true));
-    return this.page.scrollHeight;
+    return this.currentPage.content.scrollHeight;
   }
 
   newPage() {
-    this.page = document.createElement("div");
+    const page = new Page(this.renderTo);
 
-    this.page.classList.add("target");
-    this.renderTo.appendChild(this.page);
+    this.pages.push(page);
+    this.currentPage = page;
 
     // Create current domtree
-    this.targetParent = this.page;
+    this.targetParent = this.currentPage.content;
 
     this.parentList.forEach((node) => {
       let newNode = node.cloneNode(false);
@@ -120,4 +121,4 @@ export class Renderer {
       this.targetParent.removeChild(this.targetParent.lastChild);
     }
   }
-
+}
