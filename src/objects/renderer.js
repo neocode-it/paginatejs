@@ -1,3 +1,6 @@
+import { Page } from "./page";
+import { Skeleton } from "./skeleton";
+
 export class Renderer {
   constructor(content, renderTo = document.body) {
     this.content = content;
@@ -8,17 +11,27 @@ export class Renderer {
     this.targetParent = this.page;
     // Dom depth which will be added in case of a page-break
     this.parentList = [];
-    this.maxHeight = 300;
 
-    this.prepareTarget();
+    this.prepareTarget(renderTo);
+    // this.newPage();
   }
 
-  prepareTarget() {
+  prepareTarget(renderTo) {
+    // Insert pages wrapper & set rendering target to this
+    const wrapper = Skeleton.getPagesWrapper();
+    renderTo.appendChild(wrapper);
+    this.renderTo = wrapper;
+
+    // Insert base styles (required to layout pages e.g.)
+    document.head.insertBefore(
+      Skeleton.getBaseStyleElement(),
+      document.head.firstChild
+    );
+
     // Add first page
     this.newPage();
+  }
 
-    // Create current domtree
-    this.targetParent = this.page;
   /**
    * Processes the content of parent as a recursive function and distrubutes the content throughout all pages
    *
