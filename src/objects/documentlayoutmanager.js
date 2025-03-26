@@ -55,4 +55,11 @@ export class DocumentLayoutManager {
       }
     });
   }
+
+  #addPrintWrapper() {
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("paginatejs", "paginatejs-pages");
+    this.parentElement.appendChild(wrapper);
+  }
+
 }
