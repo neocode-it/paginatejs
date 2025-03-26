@@ -11,9 +11,9 @@ export class DocumentLayoutManager {
   }
 
   preparePrintLayout() {
-    this.addPrintWrapper();
-    this.removeMediaPrintRules();
-    this.addBasePrintStyles();
+    this.#addPrintWrapper();
+    this.#removeMediaPrintRules();
+    this.#addBasePrintStyles();
   }
 
   #removeMediaPrintRules() {
