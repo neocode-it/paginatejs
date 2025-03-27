@@ -17,14 +17,10 @@ export class Decorator {
   /**
    * Calculates the references of each page individually
    * add default keys to the content like page numbers
-   * @param {Element} parent
+   * @param {list[Page]} pages
    * @returns {Array referencePages}
    */
-  parsePages(parent) {
-    const pages = Array.from(parent.children).filter((child) =>
-      child.classList.contains("page")
-    );
-
+  #parsePages(pages) {
     let referencePages = [];
     let previousReferences = {};
     for (let i = 0; i < pages.length; i++) {
@@ -32,6 +28,7 @@ export class Decorator {
 
       // add previous references to this page too
       pagePreference = Object.assign(
+        {},
         previousReferences,
         this.parseCurrentPage(pages[i])
       );
@@ -56,7 +53,7 @@ export class Decorator {
    */
   parseCurrentPage(page) {
     // This will fetch all source-elements in a recursive way, starting from the beinning of the page
-    const sources = page.querySelectorAll("betterprint-source");
+    const sources = page.content.querySelectorAll("paginate-source");
 
     let references = {};
     // Let's parse the sources and overrite existing ones
@@ -72,7 +69,7 @@ export class Decorator {
       ) {
         // create hash of dataKey in oder to prevent invalid Object keys
         const hash = this.hash(dataKey);
-        references.hash = source;
+        references[hash] = source;
       }
     });
 
