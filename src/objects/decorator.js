@@ -5,8 +5,9 @@
  * - Add page numbers
  */
 export class Decorator {
-  constructor(parent) {
+  constructor(pages) {
     this.reservedKeys = ["pageNumber", "totalPages"];
+    this.pages = pages;
   }
 
   decorate(parent) {
