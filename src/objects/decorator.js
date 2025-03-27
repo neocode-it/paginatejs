@@ -86,13 +86,17 @@ export class Decorator {
    * @returns {null}
    */
   insertPageNumberReference(referencePages) {
-    const totalPages = referencePages.length;
+    const totalPages = document.createElement("span");
+    totalPages.innerHTML = referencePages.length;
     const pageNumberHash = this.hash("pageNumber");
     const totalPagesHash = this.hash("totalPages");
 
     for (let i = 0; i < referencePages.length; i++) {
-      referencePages[i].pageNumberHash = i + 1;
-      referencePages[i].totalPagesHash = totalPages;
+      const pageNumber = document.createElement("span");
+      pageNumber.innerHTML = i + 1;
+
+      referencePages[i][pageNumberHash] = pageNumber;
+      referencePages[i][totalPagesHash] = totalPages;
     }
   }
 
