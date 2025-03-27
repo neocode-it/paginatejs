@@ -71,6 +71,9 @@ export class DocumentLayoutManager {
           *, ::after, ::before {
             box-sizing: border-box;
           }
+          paginate-source{
+            display: none;
+          }
           .paginatejs-pages {
             display: flex;
             flex-direction: column;
@@ -97,6 +100,10 @@ export class DocumentLayoutManager {
             }
             .paginatejs{
               gap: 0px;
+            }
+            
+            .paginatejs .page{
+              break-after: always;
             }
           }
       `;
