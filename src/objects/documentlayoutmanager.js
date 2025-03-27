@@ -110,4 +110,13 @@ export class DocumentLayoutManager {
     const targetDocument = this.parentElement.ownerDocument;
     targetDocument.head.insertBefore(style, targetDocument.head.firstChild);
   }
+  #setPrintPageSize() {
+    const size = "size: " + this.pageWidth + "px " + this.pageHeight + "px;";
+    const style = document.createElement("style");
+
+    style.innerHTML = "@page{ " + size + " margin: 0}";
+
+    const targetDocument = this.parentElement.ownerDocument;
+    targetDocument.head.appendChild(style);
+  }
 }
