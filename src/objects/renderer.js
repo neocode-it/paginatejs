@@ -47,8 +47,11 @@ export class Renderer {
       let breakBefore = false;
       let breakAfter = false;
 
-      if (node instanceof Element) {
-        const style = window.getComputedStyle(node);
+      // important: instanceof can't be used here (won't work in iframes)
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        var win = node.ownerDocument.defaultView;
+
+        const style = win.getComputedStyle(node);
         breakBefore = style.breakBefore === "always";
         breakInside = style.breakInside === "always";
         breakAfter = style.breakAfter === "always";

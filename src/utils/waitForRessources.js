@@ -1,10 +1,11 @@
 /**
  * Waits for all resources (images, etc.) to be fully loaded.
  */
-export async function waitForResourcesReady() {
-  while (document.readyState !== "complete") {
+export async function waitForResourcesReady(doc = document) {
+  while (doc.readyState !== "complete") {
     await new Promise((resolve) =>
-      window.addEventListener("load", resolve, { once: true })
+      // must be made iframe-save
+      document.defaultView.addEventListener("load", resolve, { once: true })
     );
   }
 }
