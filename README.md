@@ -25,8 +25,8 @@ This library is still under development, but the core functionality is already w
 ### Planned approach
 Two custom html elements, which will receive the content of the first/previous source element with the same key:
 
-- `<betterprint-target data-key=""> `
-- `<betterprint-source data-key="">`
+- `<paginate-target data-key=""> `
+- `<paginate-source data-key="">`
 
 This source-element-keys will be reserved: 
 - "pageNumber"
