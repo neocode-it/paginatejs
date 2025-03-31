@@ -11,13 +11,13 @@ This library is still under development, but the core functionality is already w
 
 ### TODO
 - Add option for text-splitting
-- Add option for table headers
+- ~~Add option for table headers~~
 - ~~Prevent @media-print rules and page-break rules~~
 - ~~Implement general page layout~~
 - ~~Improve structure if possible~~
 - Handle edge-cases: Vertical overflow & single element without beeing able to break -> planned to just scale those elements
-- Running header/footer/content
-- Presets (how to set page size, how to realize dynamic header...)
+- ~~Running header/footer/content~~
+- ~~Presets (how to set page size, how to realize dynamic header...)~~
 
 ### Optional features
 - Page ranges (in order to apply different layout to specific pages) -> WIP
