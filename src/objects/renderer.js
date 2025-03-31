@@ -43,7 +43,7 @@ export class Renderer {
     for (let i = 0; i < parentNode.childNodes.length; i++) {
       const node = parentNode.childNodes[i];
 
-      let breakInside = false;
+      let avoidBreakInside = false;
       let breakBefore = false;
       let breakAfter = false;
 
@@ -52,16 +52,16 @@ export class Renderer {
         var win = node.ownerDocument.defaultView;
 
         const style = win.getComputedStyle(node);
-        breakBefore = style.breakBefore === "always";
-        breakInside = style.breakInside === "always";
-        breakAfter = style.breakAfter === "always";
+        breakBefore = style.breakBefore === "page";
+        avoidBreakInside = style.breakInside === "avoid";
+        breakAfter = style.breakAfter === "page";
       }
 
       if (breakBefore) {
         this.newPage();
       }
 
-      if (node.hasChildNodes() && !breakInside) {
+      if (node.hasChildNodes() && !avoidBreakInside) {
         // increse current dom depth
         // Add node shallow again
         let newParent = node.cloneNode(false);
