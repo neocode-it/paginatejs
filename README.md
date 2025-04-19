@@ -1,5 +1,5 @@
 # paginatejs
-Display html content in a paginated view & generate exact print-previews with focus on reliability & performance. Paginate.js does not aim to replicate the dynamic behavior of a browser's print preview. Instead, it converts the html content into a static, paginated preview, ensuring that the layout remains consistent and unaltered when printed.
+Display html content in a paginated view & generate exact print-previews with focus on reliability & performance. Paginate.js does not aim to replicate the dynamic behavior of a browser's print preview. Instead, it converts the html content into a static, paginated preview, ensuring that the layout remains consistent and unaltered when printed. For even more cross-browser consistency, you may consider using an css-normalizer/reset like [modern-normalize.css](https://github.com/sindresorhus/modern-normalize) on top.
 
 ## Limitations
 Paginate.js is focussed on broad css support. However, there are some slight limitations in favour of simplicity and cross-browser compatibility:
