@@ -9,6 +9,11 @@ export class Decorator {
     this.reservedKeys = ["pageNumber", "totalPages"];
     this.pages = pages;
   }
+  #renderFooter(sources) {
+    this.pages.forEach((page, i) => {
+      this.#renderPageFooter(page, sources[i]);
+    });
+  }
 
   #renderPageFooter(page, sources) {
     const footer = sources[this.hash("footer")];
