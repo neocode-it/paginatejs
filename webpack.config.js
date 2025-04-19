@@ -52,7 +52,7 @@ const watchConfig = {
     library: "Paginate", // Expose exports under the global "Paginate" object
     libraryTarget: "umd", // Universal Module Definition
   },
-  mode: "development", // Development mode for faster builds, without minification
+  mode: "development", // Development mode to avoid minification and compression
   module: {
     rules: [
       {
@@ -65,6 +65,10 @@ const watchConfig = {
     ],
   },
   watch: true, // Enable file watching
+  optimization: {
+    minimize: false, // Disable minification
+  },
+  devtool: "source-map", // Enable source maps for easier debugging
   plugins: [
     new webpack.BannerPlugin({
       banner: `@license Paginatejs v1.0.0 | MIT License | (C) ${new Date().getFullYear()} Neocode`,
