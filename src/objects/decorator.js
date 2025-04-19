@@ -10,8 +10,34 @@ export class Decorator {
     this.pages = pages;
   }
 
-  decorate(parent) {
-    const pages = this.parsePages(parent);
+  #renderPageFooter(page, sources) {
+    const footer = sources[this.hash("footer")];
+
+    if (footer) {
+      page.footer.innerHTML = footer.innerHTML;
+    }
+
+    let targets = page.footer.querySelectorAll(
+      'paginate-target:not([data-status="solved"])'
+    );
+
+    // Resolve targets until there is none left
+    while (targets.length) {
+      targets.forEach((target) => {
+        const key = target.getAttribute("data-key") ?? "empty-key";
+
+        // If key is header, this will cause a infinite loop
+        if (key !== "footer") {
+          target.innerHTML = sources[this.hash(key)]?.innerHTML ?? "";
+        }
+
+        target.setAttribute("data-status", "solved");
+      });
+
+      targets = page.footer.querySelectorAll(
+        'paginate-target:not([data-status="solved"])'
+      );
+    }
   }
 
   /**
