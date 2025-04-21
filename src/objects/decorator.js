@@ -9,6 +9,56 @@ export class Decorator {
     this.reservedKeys = ["pageNumber", "totalPages"];
     this.pages = pages;
   }
+  #renderPageHeader(page, prevSources, sources, pageNumber) {
+    // First page?
+    // Add first header found on page 1
+    if (pageNumber == 1) {
+      const firstHeader = page.content.querySelectorAll(
+        'paginate-source[data-key="header"]'
+      )[0];
+      if (firstHeader) {
+        page.header.innerHTML = firstHeader.innerHTML;
+      }
+    } else {
+      // Else add current header if any
+      const header = prevSources[this.hash("header")];
+
+      if (header) {
+        page.header.innerHTML = header.innerHTML;
+      }
+    }
+
+    // If page isn't first one, set paginate source data to previous page,
+    // in order to allow the header to show past content only
+    const pageSource = pageNumber == 1 ? sources : prevSources;
+
+    let targets = page.header.querySelectorAll(
+      'paginate-target:not([data-status="solved"])'
+    );
+
+    // Resolve targets until there is none left
+    while (targets.length) {
+      targets.forEach((target) => {
+        const key = target.getAttribute("data-key") ?? "empty-key";
+
+        // Always take page numer from current page
+        if (key === "pageNumber" || key === "totalPages") {
+          target.innerHTML = sources[this.hash(key)]?.innerHTML ?? "";
+        }
+        // If key is header, this will cause a infinite loop
+        else if (key !== "header") {
+          target.innerHTML = pageSource[this.hash(key)]?.innerHTML ?? "";
+        }
+
+        target.setAttribute("data-status", "solved");
+      });
+
+      targets = page.header.querySelectorAll(
+        'paginate-target:not([data-status="solved"])'
+      );
+    }
+  }
+
   #renderFooter(sources) {
     this.pages.forEach((page, i) => {
       this.#renderPageFooter(page, sources[i]);
