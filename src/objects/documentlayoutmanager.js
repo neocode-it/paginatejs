@@ -14,6 +14,45 @@ export class DocumentLayoutManager {
     this.#addPrintWrapper();
     this.#removeMediaPrintRules();
     this.#addBasePrintStyles();
+  /**
+   * Will make sure all referenced css files will be accessible.
+   *
+   * In case of missing access (e.g. CORS preventing JS to read rules), this method
+   * will fetch the stylesheet manually and replace it inline.
+   */
+  #ensureCssAccess() {
+    const targetDocument = this.parentElement.ownerDocument;
+    targetDocument
+      .querySelectorAll('link[rel="stylesheet"]')
+      .forEach((link) => {
+        const sheet = [...document.styleSheets].find(
+          (s) => s.href === link.href
+        );
+        try {
+          sheet.cssRules; // Attempt to access cssRules
+          return; // Skip this stylesheet since read access is available
+        } catch {}
+
+        try {
+          // Fetch the CSS content synchronously using XMLHttpRequest
+          const xhr = new XMLHttpRequest();
+          xhr.open("GET", link.href, false);
+          xhr.send();
+
+          if (xhr.status === 200) {
+            const style = document.createElement("style");
+            style.textContent = xhr.responseText;
+            link.replaceWith(style); // Replace <link> with <style>
+          } else {
+            console.error(`Failed to fetch ${link.href}: HTTP ${xhr.status}`);
+          }
+        } catch (error) {
+          console.error(
+            `Network/Browser error while fetching ${link.href}, some rules won't be applied: `,
+            error
+          );
+        }
+      });
   }
 
   #removeMediaPrintRules() {
