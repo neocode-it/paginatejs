@@ -9,6 +9,20 @@ export class Decorator {
     this.reservedKeys = ["pageNumber", "totalPages"];
     this.pages = pages;
   }
+
+  decorate() {
+    const sources = this.#parsePages(this.pages);
+
+    this.#renderHeader(sources);
+    this.#renderFooter(sources);
+  }
+
+  #renderHeader(sources) {
+    this.pages.forEach((page, i) => {
+      this.#renderPageHeader(page, sources[i - 1], sources[i], i + 1);
+    });
+  }
+
   #renderPageHeader(page, prevSources, sources, pageNumber) {
     // First page?
     // Add first header found on page 1
