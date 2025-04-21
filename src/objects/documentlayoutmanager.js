@@ -97,13 +97,16 @@ export class DocumentLayoutManager {
               break-after: unset !important;
               break-before: unset !important;
               break-inline: unset !important;
+              page-break-after: unset !important;
+              page-break-inside: unset !important;
+              page-break-before: unset !important;
             }
             .paginatejs{
               gap: 0px;
             }
             
             .paginatejs .page{
-              break-after: always;
+              break-after: page;
             }
           }
       `;
