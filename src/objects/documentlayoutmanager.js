@@ -171,6 +171,23 @@ export class DocumentLayoutManager {
     const targetDocument = this.parentElement.ownerDocument;
     targetDocument.head.insertBefore(style, targetDocument.head.firstChild);
   }
+
+  #determinePageDimensions() {
+    const offPage = document.createElement("div");
+    offPage.classList.add("page", "default");
+    offPage.style.position = "absolute";
+    offPage.style.top = "-9999px";
+    offPage.style.left = "-9999px";
+
+    this.wrapper.appendChild(offPage);
+    const height = offPage.offsetHeight;
+    const width = offPage.offsetWidth;
+    offPage.remove();
+
+    this.pageHeight = height;
+    this.pageWidth = width;
+  }
+
   #setPrintPageSize() {
     const size = "size: " + this.pageWidth + "px " + this.pageHeight + "px;";
     const style = document.createElement("style");
