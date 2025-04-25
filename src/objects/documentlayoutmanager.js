@@ -14,6 +14,16 @@ export class DocumentLayoutManager {
     this.#addPrintWrapper();
     this.#removeMediaPrintRules();
     this.#addBasePrintStyles();
+
+  #adjustLastPage() {
+    const lastPage = this.wrapper.lastElementChild;
+
+    if (!lastPage) return;
+
+    lastPage.style.height = lastPage.offsetHeight - 2 + "px";
+    lastPage.style.maxHeight = lastPage.style.height;
+  }
+
   /**
    * Will make sure all referenced css files will be accessible.
    *
