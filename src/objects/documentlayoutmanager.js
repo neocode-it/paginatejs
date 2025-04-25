@@ -25,6 +25,15 @@ export class DocumentLayoutManager {
   }
 
   /**
+   * Adds new page to the page wrapper
+   *
+   * @returns {Page} - new Page object
+   */
+  insertPage(pageRange = []) {
+    return new Page(this.wrapper, this.pageWidth, this.pageHeight, pageRange);
+  }
+
+  /**
    * Will make sure all referenced css files will be accessible.
    *
    * In case of missing access (e.g. CORS preventing JS to read rules), this method
