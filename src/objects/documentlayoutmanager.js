@@ -75,6 +75,8 @@ export class DocumentLayoutManager {
   }
 
   #removeMediaPrintRules() {
+    this.#ensureCssAccess();
+
     const targetDocument = this.parentElement.ownerDocument;
     // Prevent @media print rules
     // Loop through all style sheets
