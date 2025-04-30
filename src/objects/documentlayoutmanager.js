@@ -95,7 +95,7 @@ export class DocumentLayoutManager {
         }
       } catch (e) {
         // Catch SecurityError for cross-origin stylesheets
-        console.warn(
+        console.error(
           `Unable to access rules in stylesheet: ${styleSheet.href}`
         );
       }
