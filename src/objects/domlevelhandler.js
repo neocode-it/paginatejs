@@ -21,4 +21,23 @@ export class DomLevelHandler {
     this.domLevels.push(level);
   }
 
+  #handleTables(before, element, after) {
+    let prevSibling = element.previousElementSibling;
+    let nextSibling = element.nextElementSibling;
+
+    // Check for thead
+    while (prevSibling) {
+      if (prevSibling.tagName === "THEAD") {
+        var win = prevSibling.ownerDocument.defaultView;
+        const style = win.getComputedStyle(prevSibling);
+
+        if (style.display === "table-header-group") {
+          before.push(prevSibling);
+          break;
+        }
+      }
+      // Move to the next previous sibling
+      prevSibling = prevSibling.previousElementSibling;
+    }
+
 }
