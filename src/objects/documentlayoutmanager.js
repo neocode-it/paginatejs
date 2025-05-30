@@ -38,6 +38,8 @@ export class DocumentLayoutManager {
    *
    * In case of missing access (e.g. CORS preventing JS to read rules), this method
    * will fetch the stylesheet manually and replace it inline.
+   *
+   * On error, the stylesheet will be removed to prevent issues later down.
    */
   #ensureCssAccess() {
     const targetDocument = this.parentElement.ownerDocument;
