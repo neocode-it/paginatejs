@@ -89,6 +89,19 @@ export class DocumentLayoutManager {
         console.error(`Could not access stylesheet: ${styleSheet.href}`, e);
       }
     });
+
+    // Remove the external stylesheet after replacing
+    targetDocument
+      .querySelectorAll("link[rel='stylesheet']")
+      .forEach((styleTag) => {
+        styleTag.remove();
+      });
+
+    // Insert stlysheets inline
+    let newStyleTag = document.createElement("style");
+    newStyleTag.innerHTML = cssText;
+    targetDocument.head.appendChild(newStyleTag);
+  }
   }
 
   #removeMediaPrintRules() {
