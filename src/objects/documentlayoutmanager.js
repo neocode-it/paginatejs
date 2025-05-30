@@ -72,8 +72,23 @@ export class DocumentLayoutManager {
             `Network/Browser error while fetching ${link.href}, some rules won't be applied: `,
             error
           );
-        }
-      });
+
+  #convertExternalStyleSheetsInline() {
+    const targetDocument = this.parentElement.ownerDocument;
+    let cssText = "";
+    const externalStylesheets = [...targetDocument.styleSheets].filter(
+      (sheet) => sheet.href
+    );
+
+    externalStylesheets.forEach((styleSheet) => {
+      try {
+        Array.from(styleSheet.cssRules).forEach((rule) => {
+          cssText += rule.cssText + "\n";
+        });
+      } catch (e) {
+        console.error(`Could not access stylesheet: ${styleSheet.href}`, e);
+      }
+    });
   }
 
   #removeMediaPrintRules() {
