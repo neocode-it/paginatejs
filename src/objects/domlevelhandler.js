@@ -44,4 +44,24 @@ export class DomLevelHandler {
     this.domLevels.pop();
   }
 
+  renderLevels(page) {
+    let target = page.content;
+
+    this.domLevels.forEach((level) => {
+      level.before.forEach((beforeElement) => {
+        target.appendChild(beforeElement.cloneNode(true));
+      });
+
+      const newTarget = level.main.cloneNode(false);
+      target.appendChild(newTarget);
+
+      level.after.forEach((afterElement) => {
+        target.appendChild(afterElement.cloneNode(true));
+      });
+
+      target = newTarget;
+    });
+
+    return target;
+  }
 }
