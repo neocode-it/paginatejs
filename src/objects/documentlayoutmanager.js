@@ -36,10 +36,11 @@ export class DocumentLayoutManager {
   /**
    * Will make sure all referenced css files will be accessible.
    *
-   * In case of missing access (e.g. CORS preventing JS to read rules), this method
-   * will fetch the stylesheet manually and replace it inline.
+   * Backgrounds: In order to parse CSS using JS (which paginate.js depends on), it's required that cors ist allowed
+   * for all external stylesheets and crossorigin="anonymous" attribute is set. If latter is not set
+   * (which will only load css, but still prevent access), we can try to load it manuelly using xhr request.
    *
-   * On error, the stylesheet will be removed to prevent issues later down.
+   * On error, the stylesheet will be removed to prevent issues later down the line.
    */
   #ensureCssAccess() {
     const targetDocument = this.parentElement.ownerDocument;
