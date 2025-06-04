@@ -1,0 +1,24 @@
+.page{
+    background-color: orange;
+    width: 11cm;
+    height: 15cm;
+}
+
+@media print{
+    .media-test1{
+        color: red;
+    }
+}
+@media screen and (min-width: 1000px){
+    .media-test2{
+        color: red;
+    }
+}
+
+.vw-test1{
+    font-size: 2vw;
+}
+
+.vh-test1{
+    font-size: 3vh;
+}

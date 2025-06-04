@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Page Title</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="test.css">
+
+<!-- This stylesheet is valid, but cross-origin and should therefore not be applied -->
+<link rel="stylesheet" href="https://neocode.ch/wp-includes/css/admin-bar.min.css">
+
+<!-- Load Bootstrap 5.3 to apply various default styles which might cause issues -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+
+<script src="dist/paginate.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  renderer = new Paginate.Renderer(document.querySelector(".actual-content")/*.content*/);
+
+  const start = performance.now();
+  renderer.render();
+  const end = performance.now();
+  const timeTaken = end - start;
+  console.log(`Time taken: ${timeTaken}ms`);
+
+  let text = document.createElement("p");
+  text.innerHTML = `Time taken: ${timeTaken}ms`;
+  document.body.prepend(text);
+});
+</script>
+
+<body>
+
+
+<div class="actual-content" style="display: none !important">
+    <!-- Print media rules should be ignored -->
+    <p class="media-test1">This text should not be red in print if media print rules are ignored</p>
+    <!-- Media rules should be ignored -->
+    <p class="media-test2">This text should not be red in media screens over 1000px width</p>
+    <!-- Viewport width should be converted to fixed width -->
+    <p class="vw-test1">This Text should not adjust with the viewport-width</p>
+    <p class="vw-test2" style="font-size: 2vw">This Text should not adjust with the viewport-width</p>
+    <!-- Viewport height should be converted to fixed height -->
+    <p class="vh-test1">This Text should not adjust with the viewport-height</p>
+    <p class="vh-test2" style="font-size: 3vh">This Text should not adjust with the viewport-height</p>
+
+    <p style="break-after: page">There should be a page-break after this text</p>
+
+    
+
+
+
+<button style="
+    background-color: linear-gradient(45deg, #ff5733, #ffbd33);
+    border: 2px solid #ff5733;
+    font-size: 2vw; /* Font size relative to viewport width */
+">
+    Button with variable Font size
+</button>
+
+
+
+
+
+<paginate-source data-key="header">
+    <p>Page <paginate-target data-key="pageNumber"></paginate-target> of <paginate-target data-key="totalPages"></paginate-target></p>
+</paginate-source>
+    
+    adfdfgsdfsdf
+{{_("Hallo")}}
+<div class="container">
+    <img src="https://www.leaderdigital.ch/documents/library/article/2400_vorlage-leader-5.jpg?v=16357" style="height: 300px"/>
+    <h1>Hallo Janosch</h1>
+  <h2>Button Styles</h2>
+
+  <button type="button" class="btn">Basic</button>
+  <button type="button" class="btn btn-default">Default</button>
+  <button type="button" class="btn btn-primary">Primary</button>
+  <button type="button" class="btn btn-success">Success</button>
+  <button type="button" class="btn btn-info">Info</button>
+  <button type="button" class="btn btn-warning">Warning</button>
+  {{better_page_break()}}
+  <button type="button" class="btn btn-danger">Danger</button>
+  <button type="button" class="btn btn-link">Link</button>      
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h1>This is a Heading</h1>
+  
+
+  <paginate-source data-key="mykey">Hallo<paginate-target data-key="pageNumber"/></paginate-source>
+  <paginate-source data-key="footer"><p>Hallo <paginate-target data-key="mykey"></paginate-target></p></paginate-source>
+  <paginate-source data-key="header">
+    <p>Page <paginate-target data-key="pageNumber"></paginate-target> of <paginate-target data-key="totalPages"></paginate-target></p>
+  </paginate-source>
+
+  <script>
+
+
+    </script>
+  <table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Row 1</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Row 2</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Row 3</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Row 4</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Row 5</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Row 6</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>Row 7</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>Row 8</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>Row 9</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td>Row 10</td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td>Row 11</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>Row 12</td>
+        </tr>
+        <tr>
+            <td>13</td>
+            <td>Row 13</td>
+        </tr>
+        <tr>
+            <td>14</td>
+            <td>Row 14</td>
+        </tr>
+        <tr>
+            <td>15</td>
+            <td>Row 15</td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>Row 16</td>
+        </tr>
+        <tr>
+            <td>17</td>
+            <td>Row 17</td>
+        </tr>
+        <tr>
+            <td>18</td>
+            <td>Row 18</td>
+        </tr>
+        <tr>
+            <td>19</td>
+            <td>Row 19</td>
+        </tr>
+        <tr>
+            <td>20</td>
+            <td>Row 20</td>
+        </tr>
+        <tr>
+            <td>21</td>
+            <td>Row 21</td>
+        </tr>
+        <tr>
+            <td>22</td>
+            <td>Row 22</td>
+        </tr>
+        <tr>
+            <td>23</td>
+            <td>Row 23</td>
+        </tr>
+        <tr>
+            <td>24</td>
+            <td>Row 24</td>
+        </tr>
+        <tr>
+            <td>25</td>
+            <td>Row 25</td>
+        </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>
+          Footer
+        </td>
+        <td>
+          Hallo
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  
+  <p class="1">This is a paragraph.</p>
+  <p class="myclass">This is another paragraph.</p>
+  
+  <div id="parentElement">
+
+     <h1>Main Heading</h1>
+     <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
+     <ul>
+       <li>List item 1</li>
+       <li>List item 2</li>
+       <li>List item 3</li>
+     </ul>
+     <!-- This is a comment -->
+     <span>This is a <a href="#">link</a></span>
+     Text node without an element wrapper.
+  </div> <h1>This is a Heading</h1>
+  <p class="1">This is a paragraph.</p>
+  <p class="2">This is another paragraph.</p>
+  
+  <div id="parentElement3">
+     <h1>Main Heading</h1>
+     <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
+     <ul>
+       <li>List item 1</li>
+       <li>List item 2</li>
+       <li>List item 3</li>
+     </ul>
+     <!-- This is a comment -->
+     <span>This is a <a href="#">link</a></span>
+     Text node without an element wrapper.
+  </div> <h1>This is a Heading</h1>
+  <p class="1">This is a paragraph.</p>
+  <p class="2">This is another paragraph.</p>
+  
+  <div id="parentElement">
+     <h1>Main Heading</h1>
+     <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
+     <ul>
+       <li>List item 1</li>
+       <li>List item 2</li>
+       <li>List item 3</li>
+     </ul>
+     <!-- This is a comment -->
+     <span>This is a <a href="#">link</a></span>
+     Text node without an element wrapper.
+  </div> <h1>This is a Heading</h1>
+  <p class="1">This is a paragraph.</p>
+  <p class="2">This is another paragraph.</p>
+  
+  <div id="parentElement">
+     <h1>Main Heading</h1>
+     <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
+     <ul>
+       <li>List item 1</li>
+       <li>List item 2</li>
+       <li>List item 3</li>
+     </ul>
+     <!-- This is a comment -->
+     <span>This is a <a href="#">link</a></span>
+     Text node without an element wrapper.
+  </div> <h1>This is a Heading</h1>
+  <p class="1">This is a paragraph.</p>
+  <p class="2">This is another paragraph.</p>
+  
+  <div id="parentElement">
+     <h1>Main Heading</h1>
+     <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
+     <ul>
+       <li>List item 1</li>
+       <li>List item 2</li>
+       <li>List item 3</li>
+     </ul>
+     <!-- This is a comment -->
+     <span>This is a <a href="#">link</a></span>
+     Text node without an element wrapper.
+  </div> <h1>This is a Heading</h1>
+  <p class="1">This is a paragraph.</p>
+  <p class="2">This is another paragraph.</p>
+  
+  <div id="parentElement">
+     <h1>Main Heading</h1>
+     <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
+     <ul>
+       <li>List item 1</li>
+       <li>List item 2</li>
+       <li>List item 3</li>
+     </ul>
+     <!-- This is a comment -->
+     <span>This is a <a href="#">link</a></span>
+     Text node without an element wrapper.
+  </div> <h1>This is a Heading</h1>
+  <p class="1">This is a paragraph.</p>
+  <p class="2">This is another paragraph.</p>
+  
+  <div id="parentElement">
+     <h1>Main Heading</h1>
+     <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
+     <ul>
+       <li>List item 1</li>
+       <li>List item 2</li>
+       <li>List item 3</li>
+     </ul>
+     <!-- This is a comment -->
+     <span>This is a <a href="#">link</a></span>
+     Text node without an element wrapper.
+  </div> <h1>This is a Heading</h1>
+  <p class="1">This is a paragraph.</p>
+  <p class="2">This is another paragraph.</p>
+  
+  <div id="parentElement">
+     <h1>Main Heading</h1>
+     <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
+     <ul>
+       <li>List item 1</li>
+       <li>List item 2</li>
+       <li>List item 3</li>
+     </ul>
+     <!-- This is a comment -->
+     <span>This is a <a href="#">link</a></span>
+     Text node without an element wrapper.
+  </div> <h1>This is a Heading</h1>
+  <p class="1">This is a paragraph.</p>
+  <p class="2">This is another paragraph.</p>
+  
+  <div id="parentElement">
+     <h1>Main Heading</h1>
+     <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
+     <ul>
+       <li>List item 1</li>
+       <li>List item 2</li>
+       <li>List item 3</li>
+     </ul>
+     <!-- This is a comment -->
+     <span>This is a <a href="#">link</a></span>
+     Text node without an element wrapper.
+  </div> <h1>This is a Heading</h1>
+  <p class="1">This is a paragraph.</p>
+  <p class="2">This is another paragraph.</p>
+  
+  <div id="parentElement">
+     <h1>Main Heading</h1>
+     <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
+     <ul>
+       <li>List item 1</li>
+       <li>List item 2</li>
+       <li>List item 3</li>
+     </ul>
+     <!-- This is a comment -->
+     <span>This is a <a href="#">link</a></span>
+     Text node without an element wrapper.
+  </div> <h1>This is a Heading</h1>
+  <p class="1">This is a paragraph.</p>
+  <p class="2">This is another paragraph.</p>
+  
+  <div id="parentElement">
+     <h1>Main Heading</h1>
+     <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
+     <ul>
+       <li>List item 1</li>
+       <li>List item 2</li>
+       <li>List item 3</li>
+     </ul>
+     <!-- This is a comment -->
+     <span>This is a <a href="#">link</a></span>
+     Text node without an element wrapper.
+  </div> <h1>This is a Heading</h1>
+  <p class="1">This is a paragraph.</p>
+  <p class="2">This is another paragraph.</p>
+  
+  <div id="parentElement">
+     <h1>Main Heading</h1>
+     <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
+     <ul>
+       <li>List item 1</li>
+       <li>List item 2</li>
+       <li>List item 3</li>
+     </ul>
+     <!-- This is a comment -->
+     <span>This is a <a href="#">link</a></span>
+     Text node without an element wrapper.
+  </div> <h1>This is a Heading</h1>
+  <p class="1">This is a paragraph.</p>
+  <p class="2">This is another paragraph.</p>
+  
+  <div id="parentElement">
+     <h1>Main Heading</h1>
+     <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
+     <ul>
+       <li>List item 1</li>
+       <li>List item 2</li>
+       <li>List item 3</li>
+     </ul>
+     <p>ashdjk hsdjfjsdhjkfghjkdfhgjkhdjkfhgjkh dsfjkdh fjgh jkdfhgjkh jkhjkhJKHDH FJKDSH Fjkhsd fjkhsd fjk hsdjkfh sdjkfh jksdhf jksh djkfh JKHSJKDH Fjkhsdfjk hsdfjkh sjkdfh jksdhFjh SJKDFh jkhsdjkf hsdjfkh JKDSHFjk hjkSDh fjkSDHFjkSDH FJKHSDFJKh SJKDFHjkSDHfjk HJKDFh jkSDHFjk hsjkdfh sdjkfh jkhsdfjk hsdfjkh sdjkfh SJKDFH jksdhF jkHDjkfh sdJKHF kjhdsH jkhsdjkfH jkhdfjkhKJHSDJKHfjkdhSfjkh dsjkfhb jksdhbfjk bnsdjkfbn sdjkfb jksdb fjksdbf jksdbfjk bsdjkfb</p>
+     <!-- This is a comment -->
+     <span>This is a <a href="#">link</a></span>
+     Text node without an element wrapper.
+  </div> <h1>This is a Heading</h1>
+  <p class="1">This is a paragraph.</p>
+  <p class="2">This is another paragraph.</p>
+  
+  <div id="parentElement" style="break-inside:avoid; margin-top: auto;">
+     <h1>Main Heading</h1>
+     <p>This is a <strong>paragraph</strong> with some <em>text formatting</em>.</p>
+     <ul>
+       <li>List item 1</li>
+       <li>List item 2</li>
+       <li>List item 3</li>
+     </ul>
+     <!-- This is a comment -->
+     <span>This is a <a href="#">link</a></span>
+     Text node without an element wrapper.
+     <p>Hallo</p>
+  </div>
+</div>
+</body>
+</html> 
