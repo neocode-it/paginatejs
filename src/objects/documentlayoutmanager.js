@@ -70,9 +70,15 @@ export class DocumentLayoutManager {
           }
         } catch (error) {
           console.error(
-            `Network/Browser error while fetching ${link.href}, some rules won't be applied: `,
+            `PaginateJS is unable to access stylesheet rules from ${link.href}, likely due to CORS restrictions.`,
+            "Ensure that the external stylesheets have the correct `Access-Control-Allow-Origin` header set on the server to allow JavaScript to read the CSS rules.",
+            "Network/Browser error details:",
             error
           );
+          link.remove();
+        }
+      });
+  }
 
   #convertExternalStyleSheetsInline() {
     const targetDocument = this.parentElement.ownerDocument;
