@@ -80,6 +80,11 @@ export class DocumentLayoutManager {
       });
   }
 
+  /**
+   * Convert external stylesheets into inline styles in order to process them better
+   *
+   * Requires css read access for JS in order to be able reading stylesheets
+   */
   #convertExternalStyleSheetsInline() {
     const targetDocument = this.parentElement.ownerDocument;
     let cssText = "";
