@@ -15,6 +15,10 @@ export class DocumentLayoutManager {
     this.#removeMediaPrintRules();
     this.#addBasePrintStyles();
 
+  finishPrintLayout() {
+    this.#adjustLastPage();
+  }
+
   #adjustLastPage() {
     const lastPage = this.wrapper.lastElementChild;
 
