@@ -114,6 +114,31 @@ export class DocumentLayoutManager {
     newStyleTag.innerHTML = cssText;
     targetDocument.head.appendChild(newStyleTag);
   }
+
+  /**
+   * Replaces viewport width (vw) and height (vh) with absolute pixel values.
+   *
+   * @param {string} string - The CSS string to convert.
+   * @return {string} - The converted CSS string with vw and vh replaced by px.
+   */
+  #replaceViewportSizeWithAbsolute(string) {
+    const convertedStyle = string.replace(
+      /(-?\d+|-?\d*\.\d+)(vw|vh)/g,
+      (match, value, unit) => {
+        const numericValue = parseFloat(value);
+        let pxValue;
+
+        if (unit === "vw") {
+          pxValue = (numericValue / 100) * 1080; // Convert vw to px
+        } else if (unit === "vh") {
+          pxValue = (numericValue / 100) * 720; // Convert vh to px
+        }
+
+        return `${Math.round(pxValue)}px`; // Replace with pixel value
+      }
+    );
+    return convertedStyle;
+  }
   }
 
   #removeMediaPrintRules() {
