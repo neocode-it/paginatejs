@@ -48,7 +48,7 @@ Rendere is responsible for the core parts of Paginate.js: Create empty pages and
 
 ### DocumentLayoutManager
 
-DocumentLayoutManager handles the paginated view's overall layout and styling.
+DocumentLayoutManager handles the paginated view's overall layout and styling. It also prepares the stylesheets and replaces unsupported css rules (mainly media rules and relative units).
 
 ### Decorator Class
 
