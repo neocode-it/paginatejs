@@ -8,6 +8,7 @@
 export class DocumentLayoutManager {
   constructor(parentElement) {
     this.parentElement = parentElement;
+    this.targetDocument = parentElement.ownerDocument;
   }
 
   preparePrintLayout() {
