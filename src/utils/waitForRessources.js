@@ -5,7 +5,7 @@ export async function waitForResourcesReady(doc = document) {
   while (doc.readyState !== "complete") {
     await new Promise((resolve) =>
       // must be made iframe-save
-      document.defaultView.addEventListener("load", resolve, { once: true })
+      doc.defaultView.addEventListener("load", resolve, { once: true })
     );
   }
 }
