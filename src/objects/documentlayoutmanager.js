@@ -48,11 +48,11 @@ export class DocumentLayoutManager {
    * On error, the stylesheet will be removed to prevent issues later down the line.
    */
   #ensureCssAccess() {
-    const targetDocument = this.parentElement.ownerDocument;
+    const targetDocument = this.targetDocument;
     targetDocument
       .querySelectorAll('link[rel="stylesheet"]')
       .forEach((link) => {
-        const sheet = [...document.styleSheets].find(
+        const sheet = [...targetDocument.styleSheets].find(
           (s) => s.href === link.href
         );
         try {
