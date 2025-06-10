@@ -21,6 +21,7 @@ This library is still under development, but the core functionality is already w
 - Handle edge-cases: Vertical overflow & single element without beeing able to break -> planned to just scale those elements
 - ~~Running header/footer/content~~
 - ~~Presets (how to set page size, how to realize dynamic header...)~~
+- Fix: Remove media rules at all, don't just replace with media screen (won't apply in print!)
 
 ### Optional features
 - Page ranges (in order to apply different layout to specific pages) -> WIP
