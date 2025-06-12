@@ -91,19 +91,29 @@ export class DocumentLayoutManager {
    * Requires css read access for JS in order to be able reading stylesheets
    */
   #convertExternalStyleSheetsInline() {
-    const targetDocument = this.parentElement.ownerDocument;
     let cssText = "";
-    const externalStylesheets = [...targetDocument.styleSheets].filter(
+    const externalStylesheets = [...this.targetDocument.styleSheets].filter(
       (sheet) => sheet.href
     );
 
     externalStylesheets.forEach((styleSheet) => {
       try {
+        cssText = "";
         Array.from(styleSheet.cssRules).forEach((rule) => {
           cssText += rule.cssText + "\n";
         });
+
+        // Insert stlysheets inline
+        let newStyleTag = document.createElement("style");
+        newStyleTag.innerHTML = cssText;
+
+        const linkTag = styleSheet.ownerNode;
+        linkTag.parentNode.insertBefore(newStyleTag, linkTag);
       } catch (e) {
-        console.error(`Could not access stylesheet: ${styleSheet.href}`, e);
+        console.error(
+          `Could not access and replace stylesheet: ${styleSheet.href}`,
+          e
+        );
       }
     });
 
