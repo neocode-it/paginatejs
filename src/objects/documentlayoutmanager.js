@@ -13,6 +13,7 @@ export class DocumentLayoutManager {
 
   preparePrintLayout() {
     this.#addPrintWrapper();
+    this.#moveStylesToHead();
     this.#removeMediaPrintRules();
     this.#addBasePrintStyles();
 
@@ -124,10 +125,22 @@ export class DocumentLayoutManager {
         styleTag.remove();
       });
 
-    // Insert stlysheets inline
-    let newStyleTag = document.createElement("style");
-    newStyleTag.innerHTML = cssText;
-    targetDocument.head.appendChild(newStyleTag);
+  /**
+   * Moves all styles and stylesheets to the head of the document.
+   * This is necessary to ensure that styles won't be copied with the paged content.
+   * In addition, it will ensure that all styles keep beeing applied after edits document.styleSheets
+   */
+  #moveStylesToHead() {
+    const head = this.targetDocument.head;
+    const stylesAndLinks = this.targetDocument.querySelectorAll(
+      'style, link[rel="stylesheet"]'
+    );
+
+    stylesAndLinks.forEach((element) => {
+      if (!head.contains(element)) {
+        head.appendChild(element);
+      }
+    });
   }
 
   /**
