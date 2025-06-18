@@ -169,6 +169,32 @@ export class DocumentLayoutManager {
     );
     return convertedStyle;
   }
+
+  /**
+   * Replaces VW or VH with fixed height or width in order to prevent relative sizes
+   */
+  #replaceInvalidStyleRules() {
+    // Check all elements with style attribute
+    this.targetDocument.querySelectorAll("[style]").forEach((element) => {
+      let style = element.getAttribute("style");
+
+      style = this.#replaceViewportSizeWithAbsolute(style);
+
+      element.setAttribute("style", style);
+    });
+
+    // Check all stylesheets and replace invalid rules for PaginateJS
+    Array.from(this.targetDocument.styleSheets).forEach((styleSheet) => {
+      try {
+        for (let i = 0; i < styleSheet.cssRules.length; i++) {
+          this.#recursiveRemoveRules(styleSheet, i); // Call the function for each rule
+        }
+      } catch (e) {
+        console.error(`Could not access stylesheet: ${styleSheet.href}`, e);
+      }
+    });
+  }
+
   }
 
   #removeMediaPrintRules() {
