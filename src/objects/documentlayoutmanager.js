@@ -118,12 +118,14 @@ export class DocumentLayoutManager {
       }
     });
 
-    // Remove the external stylesheet after replacing
-    targetDocument
+    // Remove the external stylesheet after replacing,
+    // ensureing even if the stylesheet was not accessible, it will be removed
+    this.targetDocument
       .querySelectorAll("link[rel='stylesheet']")
       .forEach((styleTag) => {
         styleTag.remove();
       });
+  }
 
   /**
    * Moves all styles and stylesheets to the head of the document.
