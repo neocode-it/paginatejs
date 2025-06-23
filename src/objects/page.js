@@ -3,11 +3,16 @@ export class Page {
    * Creates a new page inside parent
    *
    * @param {HTMLElement} parent - Paginatejs wrapper
+   * @param {int} pageWidth - Page width in px
+   * @param {int} pageHeight - Page width in px
    * @param {string[]} [pageRange] - Current page range
    */
-  constructor(parent, pageRange = []) {
+  constructor(parent, pageWidth, pageHeight, pageRange = []) {
     this.parent = parent;
     this.pageRange = pageRange;
+
+    this.width = pageWidth;
+    this.height = pageHeight;
 
     this.page = this.createPage();
   }
@@ -72,15 +77,11 @@ export class Page {
    * @returns {null}
    */
   calculateAndLockHeights(page, header, content, footer) {
-    const pageWidth = page.offsetWidth;
-    page.style.width = pageWidth + "px";
-    page.style.maxWidth = pageWidth + "px";
+    page.style.width = this.width + "px";
+    page.style.maxWidth = this.width + "px";
 
-    const pageHeight = page.offsetHeight;
-    page.style.height = pageHeight + "px";
-    // Add little offset of .4px
-    // in order to prevent empty last page in Firefox
-    page.style.maxHeight = pageHeight - 0.4 + "px";
+    page.style.height = this.height + "px";
+    page.style.maxHeight = this.height + "px";
 
     const headerHeight = header.offsetHeight;
     header.style.height = headerHeight + "px";
@@ -94,8 +95,6 @@ export class Page {
     content.style.height = contentHeight + "px";
     content.style.maxHeight = contentHeight + "px";
 
-    this.height = pageHeight;
-    this.width = pageWidth;
     this.headerHeight = headerHeight;
     this.contentHeight = contentHeight;
     this.footerHeight = footerHeight;
