@@ -45,6 +45,7 @@ export class Page {
     content.style.width = "100%";
     content.style.height = "unset";
     content.style.flexGrow = "1";
+    content.style.overflow = "hidden";
 
     const footer = document.createElement("div");
     footer.classList.add("footer");
