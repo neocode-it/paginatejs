@@ -60,7 +60,7 @@ export class Page {
     this.calculateAndLockHeights(page, header, content, footer);
 
     this.page = page;
-    this.footer = footer;
+    this.header = header;
     this.content = content;
     this.footer = footer;
   }
