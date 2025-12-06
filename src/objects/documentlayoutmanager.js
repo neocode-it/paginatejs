@@ -1,3 +1,4 @@
+import { Page } from "./page.js";
 /**
  * DocumentLayoutManager is responsible for general tasks such as:
  * - Generate base wrapper for paginate.js pages
@@ -13,9 +14,15 @@ export class DocumentLayoutManager {
 
   preparePrintLayout() {
     this.#addPrintWrapper();
+    this.#ensureCssAccess();
+    this.#convertExternalStyleSheetsInline();
     this.#moveStylesToHead();
-    this.#removeMediaPrintRules();
+    this.#replaceInvalidStyleRules();
+    // this.#removeMediaPrintRules();
     this.#addBasePrintStyles();
+    this.#determinePageDimensions();
+    this.#setPrintPageSize();
+  }
 
   finishPrintLayout() {
     this.#adjustLastPage();
