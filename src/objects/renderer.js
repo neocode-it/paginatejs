@@ -1,5 +1,6 @@
 import { Page } from "./page";
 import { Skeleton } from "./skeleton";
+import { DomLevelHandler } from "./domlevelhandler";
 
 export class Renderer {
   constructor(content, renderTo = document.body) {
@@ -11,9 +12,7 @@ export class Renderer {
     this.targetParent = this.page;
     // Dom depth which will be added in case of a page-break
     this.parentList = [];
-
-    this.prepareTarget(renderTo);
-    // this.newPage();
+    this.domLevelHandler = new DomLevelHandler();
   }
 
   prepareTarget(renderTo) {
@@ -68,12 +67,12 @@ export class Renderer {
         this.targetParent.appendChild(newParent);
 
         this.targetParent = newParent;
-        this.parentList.push(node);
+        this.domLevelHandler.addToDomLevel(node);
 
         this.processContent(node);
 
         // remove current dom depth
-        this.parentList.pop();
+        this.domLevelHandler.popLevel();
         this.targetParent = this.targetParent.parentNode;
 
         // In case there is none, There has been a page-break and the children are on the new page.
@@ -124,11 +123,7 @@ export class Renderer {
     // Create current domtree
     this.targetParent = this.currentPage.content;
 
-    this.parentList.forEach((node) => {
-      let newNode = node.cloneNode(false);
-      this.targetParent.appendChild(newNode);
-      this.targetParent = newNode;
-    });
+    this.targetParent = this.domLevelHandler.renderLevels(page);
   }
 
   removeLastChildNode() {
