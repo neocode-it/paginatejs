@@ -195,6 +195,57 @@ export class DocumentLayoutManager {
     });
   }
 
+  /**
+   * Recursively processes CSS rules to remove undesired css rules
+   * like remove media queries or convert vw/vh units to pixels.
+   *
+   * This function will edit the stylesheets directly,
+   * so the passed rule index should be re-checked after returning if he is still valid.
+   *
+   * @param {CSSRule} styleSheet - parent rule/stylesheet to process
+   * @param {int} ruleIndex - index of the rule to process
+   * @returns {void}
+   */
+  #recursiveRemoveRules(styleSheet, ruleIndex) {
+    // Ensure rule exists
+    let rule = styleSheet.cssRules[ruleIndex];
+    if (!rule) return;
+
+    // Neutralize media queries -> apply rules always
+    if (rule.media && rule.type === CSSRule.MEDIA_RULE) {
+      // Insert inner rules right after the media rule
+      Array.from(rule.cssRules).forEach((innerRule, i) => {
+        styleSheet.insertRule(innerRule.cssText, ruleIndex + i + 1);
+      });
+
+      // Remove the original media rule
+      styleSheet.deleteRule(ruleIndex);
+
+      // Re-fetch the rule after insertion
+      rule = styleSheet.cssRules[ruleIndex];
+    }
+
+    // If the rule is a style rule, process its styles
+    // This will convert relative vw/vh to absolute pixels
+    if (rule.style) {
+      for (let i = 0; i < rule.style.length; i++) {
+        let property = rule.style[i];
+        let value = rule.style.getPropertyValue(property);
+
+        // Convert `vw` to pixels
+        if (value.includes("vw") || value.includes("vh")) {
+          value = this.#replaceViewportSizeWithAbsolute(value);
+          rule.style.setProperty(property, value);
+        }
+      }
+    }
+    // Recursively check for nested rules
+    if (rule.cssRules) {
+      for (let i = 0; i < rule.cssRules.length; i++) {
+        this.#recursiveRemoveRules(rule, i);
+      }
+    }
+    return;
   }
 
   #removeMediaPrintRules() {
