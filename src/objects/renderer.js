@@ -1,5 +1,9 @@
+import { Decorator } from "./decorator";
+import { DocumentLayoutManager } from "./documentlayoutmanager";
 import { Page } from "./page";
 import { Skeleton } from "./skeleton";
+
+import { waitForResourcesReady } from "../utils/waitForRessources";
 import { DomLevelHandler } from "./domlevelhandler";
 
 export class Renderer {
@@ -16,19 +20,23 @@ export class Renderer {
   }
 
   prepareTarget(renderTo) {
-    // Insert pages wrapper & set rendering target to this
-    const wrapper = Skeleton.getPagesWrapper();
-    renderTo.appendChild(wrapper);
-    this.renderTo = wrapper;
+    this.layoutManager = new DocumentLayoutManager(renderTo);
 
-    // Insert base styles (required to layout pages e.g.)
-    document.head.insertBefore(
-      Skeleton.getBaseStyleElement(),
-      document.head.firstChild
-    );
+    // Insert wrapper and base styles
+    this.layoutManager.preparePrintLayout();
+    this.renderTo = this.layoutManager.wrapper;
 
     // Add first page
     this.newPage();
+  }
+
+  render() {
+    waitForResourcesReady(this.content.ownerDocument);
+    this.prepareTarget(this.renderTo);
+    this.processContent();
+    this.layoutManager.finishPrintLayout();
+
+    new Decorator(this.pages).decorate();
   }
 
   /**
@@ -115,7 +123,7 @@ export class Renderer {
   }
 
   newPage() {
-    const page = new Page(this.renderTo);
+    const page = this.layoutManager.insertPage();
 
     this.pages.push(page);
     this.currentPage = page;

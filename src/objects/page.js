@@ -101,4 +101,3 @@ export class Page {
     this.footerHeight = footerHeight;
   }
 }
-
