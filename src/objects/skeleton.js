@@ -1,20 +1,28 @@
 /**
- * PaginateWrapper is responsible for general tasks such as:
- * - Generate base wrapper for paginate.js pages
- * - Insert base css required for paginate.js
- * - Add media print settings for paginate.js
+ * Utility class for creating paginate.js DOM structure and base styles.
  */
 export class Skeleton {
+  /**
+   * @param {HTMLElement} renderTo - Target container for pagination output
+   */
   constructor(renderTo) {
     this.renderTo = renderTo;
   }
 
+  /**
+   * Creates the main pages wrapper element.
+   * @returns {HTMLDivElement} Wrapper div with paginatejs classes
+   */
   insertPageWrapper() {
     const wrapper = document.createElement("div");
     wrapper.classList.add("paginatejs", "paginatejs-pages");
     return wrapper;
   }
 
+  /**
+   * Creates a style element with base CSS for page layout and print media.
+   * @returns {HTMLStyleElement} Style element with base paginate.js styles
+   */
   static getBaseStyleElement() {
     const style = document.createElement("style");
     style.innerHTML = `
@@ -53,6 +61,10 @@ export class Skeleton {
     return style;
   }
 
+  /**
+   * Creates a pages wrapper element (static alternative to insertPageWrapper).
+   * @returns {HTMLDivElement} Wrapper div with paginatejs classes
+   */
   static getPagesWrapper() {
     const wrapper = document.createElement("div");
     wrapper.classList.add("paginatejs", "paginatejs-pages");

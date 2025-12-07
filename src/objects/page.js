@@ -1,11 +1,13 @@
+/**
+ * Represents a single paginated page with header, content, and footer sections.
+ */
 export class Page {
   /**
-   * Creates a new page inside parent
-   *
-   * @param {HTMLElement} parent - Paginatejs wrapper
-   * @param {int} pageWidth - Page width in px
-   * @param {int} pageHeight - Page width in px
-   * @param {string[]} [pageRange] - Current page range
+   * Creates and renders a new page element.
+   * @param {HTMLElement} parent - Paginate.js wrapper to append page to
+   * @param {number} pageWidth - Page width in pixels
+   * @param {number} pageHeight - Page height in pixels
+   * @param {string[]} [pageRange=[]] - CSS classes to apply to the page
    */
   constructor(parent, pageWidth, pageHeight, pageRange = []) {
     this.parent = parent;
@@ -18,9 +20,8 @@ export class Page {
   }
 
   /**
-   * Creates an empty, new page element
-   *
-   * @returns {null}
+   * Creates the page DOM structure with header, content, and footer sections.
+   * Appends to parent and locks dimensions after creation.
    */
   createPage() {
     if (this.pageRange.length == 0) {
@@ -67,15 +68,12 @@ export class Page {
   }
 
   /**
-   * Calculates & locks the page heights of header, content and footer
-   * in order to prevent accidental changes after content has been added
-   *
-   * @param {HTMLElement} page - The (empty) rendered page
-   * @param {HTMLElement} header - The (empty) header element of the page
-   * @param {HTMLElement} conten - The (empty) content element of the page
-   * @param {HTMLElement} footer - The (empty) footer element of the page
-   *
-   * @returns {null}
+   * Locks page dimensions by setting explicit height/maxHeight on all sections.
+   * Prevents layout shifts when content is added.
+   * @param {HTMLElement} page - Page container element
+   * @param {HTMLElement} header - Header section element
+   * @param {HTMLElement} content - Content section element
+   * @param {HTMLElement} footer - Footer section element
    */
   calculateAndLockHeights(page, header, content, footer) {
     page.style.width = this.width + "px";

@@ -1,17 +1,21 @@
 import { Page } from "./page.js";
 /**
- * DocumentLayoutManager is responsible for general tasks such as:
- * - Generate base wrapper for paginate.js pages
- * - Insert base css required for paginate.js
- * - Add media print settings for paginate.js
- * - Responsible to calculate and create new pages with preset layout (size & style)
+ * Manages document layout preparation for pagination.
+ * Handles CSS normalization, page wrapper creation, and print styles.
  */
 export class DocumentLayoutManager {
+  /**
+   * @param {HTMLElement} parentElement - Container to render paginated content into
+   */
   constructor(parentElement) {
     this.parentElement = parentElement;
     this.targetDocument = parentElement.ownerDocument;
   }
 
+  /**
+   * Prepares the document for pagination. Normalizes CSS, creates page wrapper,
+   * and calculates page dimensions from stylesheets.
+   */
   preparePrintLayout() {
     this.#addPrintWrapper();
     this.#ensureCssAccess();
@@ -24,10 +28,15 @@ export class DocumentLayoutManager {
     this.#setPrintPageSize();
   }
 
+  /**
+   * Finalizes print layout after content rendering.
+   * Adjusts last page height to prevent blank page in print.
+   */
   finishPrintLayout() {
     this.#adjustLastPage();
   }
 
+  /** Reduces last page height by 2px to prevent extra blank page in print. */
   #adjustLastPage() {
     const lastPage = this.wrapper.lastElementChild;
 
@@ -38,22 +47,17 @@ export class DocumentLayoutManager {
   }
 
   /**
-   * Adds new page to the page wrapper
-   *
-   * @returns {Page} - new Page object
+   * Creates and inserts a new page into the wrapper.
+   * @param {string[]} [pageRange=[]] - CSS classes to apply to the page
+   * @returns {Page} The newly created Page instance
    */
   insertPage(pageRange = []) {
     return new Page(this.wrapper, this.pageWidth, this.pageHeight, pageRange);
   }
 
   /**
-   * Will make sure all referenced css files will be accessible.
-   *
-   * Backgrounds: In order to parse CSS using JS (which paginate.js depends on), it's required that cors ist allowed
-   * for all external stylesheets and crossorigin="anonymous" attribute is set. If latter is not set
-   * (which will only load css, but still prevent access), we can try to load it manuelly using xhr request.
-   *
-   * On error, the stylesheet will be removed to prevent issues later down the line.
+   * Ensures CSS stylesheets are accessible for JS parsing.
+   * Fetches external stylesheets via XHR if CORS blocks direct access.
    */
   #ensureCssAccess() {
     const targetDocument = this.targetDocument;
@@ -93,11 +97,7 @@ export class DocumentLayoutManager {
       });
   }
 
-  /**
-   * Convert external stylesheets into inline styles in order to process them better
-   *
-   * Requires css read access for JS in order to be able reading stylesheets
-   */
+  /** Converts external stylesheets to inline <style> tags for easier manipulation. */
   #convertExternalStyleSheetsInline() {
     let cssText = "";
     const externalStylesheets = [...this.targetDocument.styleSheets].filter(
@@ -153,10 +153,9 @@ export class DocumentLayoutManager {
   }
 
   /**
-   * Replaces viewport width (vw) and height (vh) with absolute pixel values.
-   *
-   * @param {string} string - The CSS string to convert.
-   * @return {string} - The converted CSS string with vw and vh replaced by px.
+   * Converts viewport units (vw/vh) to fixed pixel values.
+   * @param {string} string - CSS value string containing viewport units
+   * @returns {string} CSS string with viewport units replaced by pixels
    */
   #replaceViewportSizeWithAbsolute(string) {
     const convertedStyle = string.replace(
@@ -177,9 +176,7 @@ export class DocumentLayoutManager {
     return convertedStyle;
   }
 
-  /**
-   * Replaces VW or VH with fixed height or width in order to prevent relative sizes
-   */
+  /** Normalizes styles by converting viewport units to pixels in all elements and stylesheets. */
   #replaceInvalidStyleRules() {
     // Check all elements with style attribute
     this.targetDocument.querySelectorAll("[style]").forEach((element) => {
@@ -255,6 +252,7 @@ export class DocumentLayoutManager {
     return;
   }
 
+  /** Removes @media print rules from stylesheets. Currently unused. */
   #removeMediaPrintRules() {
     this.#ensureCssAccess();
 
@@ -308,6 +306,7 @@ export class DocumentLayoutManager {
     });
   }
 
+  /** Creates and appends the main paginate.js wrapper element. */
   #addPrintWrapper() {
     const wrapper = document.createElement("div");
     wrapper.classList.add("paginatejs", "paginatejs-pages");
@@ -316,6 +315,7 @@ export class DocumentLayoutManager {
     this.wrapper = wrapper;
   }
 
+  /** Injects base CSS for page layout, flexbox structure, and print behavior. */
   #addBasePrintStyles() {
     const style = document.createElement("style");
     style.innerHTML = `
@@ -365,6 +365,7 @@ export class DocumentLayoutManager {
     targetDocument.head.insertBefore(style, targetDocument.head.firstChild);
   }
 
+  /** Calculates page dimensions by measuring an off-screen test element. */
   #determinePageDimensions() {
     const offPage = document.createElement("div");
     offPage.classList.add("page", "default");
@@ -381,6 +382,7 @@ export class DocumentLayoutManager {
     this.pageWidth = width;
   }
 
+  /** Sets @page CSS rule with calculated dimensions and zero margins. */
   #setPrintPageSize() {
     const size = "size: " + this.pageWidth + "px " + this.pageHeight + "px;";
     const style = document.createElement("style");

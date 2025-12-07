@@ -1,8 +1,19 @@
+/**
+ * Tracks DOM nesting levels during pagination to restore element hierarchy on page breaks.
+ * Handles special cases like table headers that must repeat across pages.
+ */
 export class DomLevelHandler {
+  /** Creates a new handler with empty level stack. */
   constructor() {
     this.domLevels = [];
     this.target = null;
   }
+
+  /**
+   * Pushes an element onto the DOM level stack.
+   * For tables, also captures thead for repetition on new pages.
+   * @param {HTMLElement} element - Element to track in the hierarchy
+   */
   addToDomLevel(element) {
     let before = [];
     let after = [];
@@ -21,6 +32,12 @@ export class DomLevelHandler {
     this.domLevels.push(level);
   }
 
+  /**
+   * Captures table thead element for repetition on page breaks.
+   * @param {HTMLElement[]} before - Array to store elements rendered before tbody
+   * @param {HTMLElement} element - The tbody element being processed
+   * @param {HTMLElement[]} after - Array to store elements rendered after tbody
+   */
   #handleTables(before, element, after) {
     let prevSibling = element.previousElementSibling;
     let nextSibling = element.nextElementSibling;
@@ -44,6 +61,11 @@ export class DomLevelHandler {
     this.domLevels.pop();
   }
 
+  /**
+   * Reconstructs the DOM hierarchy on a new page by cloning all tracked levels.
+   * @param {Page} page - The page to render levels into
+   * @returns {HTMLElement} Deepest nested element to continue inserting content
+   */
   renderLevels(page) {
     let target = page.content;
 

@@ -1,15 +1,20 @@
 /**
- * Decorator class will decorate all pages after rendering. It's main purpose:
- * - Parse betterprint elements
- * - Render Header / Footer content
- * - Add page numbers
+ * Post-render decorator that populates headers, footers, and resolves
+ * paginate-source/paginate-target elements for dynamic content like page numbers.
  */
 export class Decorator {
+  /**
+   * @param {Page[]} pages - Array of rendered Page instances to decorate
+   */
   constructor(pages) {
     this.reservedKeys = ["pageNumber", "totalPages"];
     this.pages = pages;
   }
 
+  /**
+   * Decorates all pages with headers, footers, and resolved target values.
+   * Parses source elements and applies them to corresponding targets.
+   */
   decorate() {
     const sources = this.#parsePages(this.pages);
 
@@ -17,12 +22,23 @@ export class Decorator {
     this.#renderFooter(sources);
   }
 
+  /**
+   * Renders headers for all pages using accumulated source references.
+   * @param {Object[]} sources - Array of source reference objects per page
+   */
   #renderHeader(sources) {
     this.pages.forEach((page, i) => {
       this.#renderPageHeader(page, sources[i - 1], sources[i], i + 1);
     });
   }
 
+  /**
+   * Renders header for a single page, resolving paginate-target elements.
+   * @param {Page} page - Page to render header for
+   * @param {Object} prevSources - Source references from previous page
+   * @param {Object} sources - Source references from current page
+   * @param {number} pageNumber - 1-based page number
+   */
   #renderPageHeader(page, prevSources, sources, pageNumber) {
     // First page?
     // Add first header found on page 1
@@ -73,12 +89,21 @@ export class Decorator {
     }
   }
 
+  /**
+   * Renders footers for all pages using source references.
+   * @param {Object[]} sources - Array of source reference objects per page
+   */
   #renderFooter(sources) {
     this.pages.forEach((page, i) => {
       this.#renderPageFooter(page, sources[i]);
     });
   }
 
+  /**
+   * Renders footer for a single page, resolving paginate-target elements.
+   * @param {Page} page - Page to render footer for
+   * @param {Object} sources - Source references for this page
+   */
   #renderPageFooter(page, sources) {
     const footer = sources[this.hash("footer")];
 
@@ -110,10 +135,9 @@ export class Decorator {
   }
 
   /**
-   * Calculates the references of each page individually
-   * add default keys to the content like page numbers
-   * @param {list[Page]} pages
-   * @returns {Array referencePages}
+   * Builds cumulative source references for each page, including page numbers.
+   * @param {Page[]} pages - Array of pages to parse
+   * @returns {Object[]} Array of reference objects, one per page
    */
   #parsePages(pages) {
     let referencePages = [];
@@ -139,12 +163,9 @@ export class Decorator {
   }
 
   /**
-   * Searches current page for source content and generates a
-   * Object of every reference. References are a hash-value of the data-key attribute
-   *
-   *
-   * @param {Element} page - Page to search for source content
-   * @returns {Object references} references
+   * Extracts paginate-source elements from a page into a hash-keyed object.
+   * @param {Page} page - Page to extract sources from
+   * @returns {Object} Map of hashed data-key to source element
    */
   parseCurrentPage(page) {
     // This will fetch all source-elements in a recursive way, starting from the beinning of the page
@@ -172,10 +193,8 @@ export class Decorator {
   }
 
   /**
-   * Insert page number references into each page references
-   *
-   * @param {Array} references
-   * @returns {null}
+   * Adds pageNumber and totalPages references to each page's source map.
+   * @param {Object[]} referencePages - Array of reference objects to augment
    */
   insertPageNumberReference(referencePages) {
     const totalPages = document.createElement("span");
@@ -193,12 +212,10 @@ export class Decorator {
   }
 
   /**
-   * Returns a hash code from a string
-   * Please note: not recommended for security applications! insecure.
-   *
-   * @param  {String} str The string to hash.
-   * @return {Number}    A 32bit integer
-   * @see http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+   * Generates a 32-bit hash from a string (Java's hashCode algorithm).
+   * Not recommended for security applications! insecure.
+   * @param {string} str - String to hash
+   * @returns {number} 32-bit integer hash
    */
   hash(str) {
     let hash = 0;

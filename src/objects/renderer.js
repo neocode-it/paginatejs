@@ -6,7 +6,16 @@ import { Skeleton } from "./skeleton";
 import { waitForResourcesReady } from "../utils/waitForRessources";
 import { DomLevelHandler } from "./domlevelhandler";
 
+/**
+ * Main entry point for paginate.js. Renders HTML content into paginated pages
+ * suitable for print or unifed PDF export.
+ */
 export class Renderer {
+  /**
+   * Creates a new Renderer instance.
+   * @param {HTMLElement} content - Source element containing content to paginate
+   * @param {HTMLElement} [renderTo=document.body] - Target container for rendered pages
+   */
   constructor(content, renderTo = document.body) {
     this.content = content;
     this.renderTo = renderTo;
@@ -19,6 +28,10 @@ export class Renderer {
     this.domLevelHandler = new DomLevelHandler();
   }
 
+  /**
+   * Initializes layout manager and prepares the target container for pagination.
+   * @param {HTMLElement} renderTo - Container element to render pages into
+   */
   prepareTarget(renderTo) {
     this.layoutManager = new DocumentLayoutManager(renderTo);
 
@@ -30,6 +43,10 @@ export class Renderer {
     this.newPage();
   }
 
+  /**
+   * Renders the content into paginated pages. Main public API method.
+   * Waits for resources, processes content, and applies header/footer decorations.
+   */
   render() {
     waitForResourcesReady(this.content.ownerDocument);
     this.prepareTarget(this.renderTo);
@@ -40,10 +57,9 @@ export class Renderer {
   }
 
   /**
-   * Processes the content of parent as a recursive function and distrubutes the content throughout all pages
-   *
-   * @param {Node} parentNode - parent of the current depth which will be processed into pages
-   * @returns {null}
+   * Recursively processes child nodes and distributes them across pages.
+   * Handles CSS break-before, break-after, and break-inside properties.
+   * @param {Node} [parentNode=this.content] - Parent node to process children from
    */
   processContent(parentNode = this.content) {
     // iterate through all direct children
@@ -117,11 +133,20 @@ export class Renderer {
     }
   }
 
+  /**
+   * Clones and inserts a node into the current page, returning content height.
+   * @param {Node} node - Node to clone and insert
+   * @returns {number} Scroll height of page content after insertion
+   */
   insertAndCheckNode(node) {
     this.targetParent.appendChild(node.cloneNode(true));
     return this.currentPage.content.scrollHeight;
   }
 
+  /**
+   * Creates a new page and restores the current DOM nesting structure.
+   * Updates targetParent to point to the deepest nested element.
+   */
   newPage() {
     const page = this.layoutManager.insertPage();
 
@@ -134,6 +159,10 @@ export class Renderer {
     this.targetParent = this.domLevelHandler.renderLevels(page);
   }
 
+  /**
+   * Removes the last child from the current target parent.
+   * Used to undo insertions that caused overflow.
+   */
   removeLastChildNode() {
     if (this.targetParent.lastChild) {
       // Removes the last child, including text nodes
