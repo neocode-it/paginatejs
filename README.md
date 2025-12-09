@@ -23,6 +23,24 @@ This library is still under development, but the core functionality is already w
 - ~~Presets (how to set page size, how to realize dynamic header...)~~
 - Fix: Remove media rules at all, don't just replace with media screen (won't apply in print!)
 
+### Edge cases we need to find a good solution
+- Text overflow: If bleed exceeds a certain value, we should split the text.
+    Optionally, we need do add/transfer other elements (parents, siblings) too... in case of flex-row or table for example.
+        inline
+        inline-block
+        float (left/right)
+        flexbox (row)
+        grid (columns)
+        table / table-cell
+        absolute positioning
+        CSS multi-column
+- Flex direction row
+    If elements exceed the width... it's ok to let it overflow.
+- Ordered lists (need to continue on the next page)
+    Required hooks: On-new-page
+- Grid elements
+    Leave them as is for now.
+
 ### Optional features
 - Page ranges (in order to apply different layout to specific pages) -> WIP
 
