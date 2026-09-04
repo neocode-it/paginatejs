@@ -56,6 +56,7 @@ export class DomLevelHandler {
       // Move to the next previous sibling
       prevSibling = prevSibling.previousElementSibling;
     }
+  }
 
   popLevel() {
     this.domLevels.pop();
